@@ -37,54 +37,60 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #86efac; border-radius: 10px; }
+        .sidebar-transition { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden text-gray-700">
 
-    <!-- ==================== ฝั่งซ้าย: แถบเมนู (Sidebar) ==================== -->
-    <aside class="w-72 bg-white border-r border-gray-200 flex flex-col justify-between shadow-sm z-10">
+    <!-- ==================== ฝั่งซ้าย: แถบเมนู (Sidebar) สีเขียวน่ารักเปิด-ปิดได้ ==================== -->
+    <aside id="sidebar" class="w-72 bg-emerald-50 border-r border-emerald-200 flex flex-col justify-between shadow-sm z-10 sidebar-transition relative">
+        <!-- ปุ่มเปิด/ปิด Sidebar -->
+        <button onclick="toggleSidebar()" class="absolute -right-3 top-6 bg-emerald-500 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-md hover:bg-emerald-600 transition z-20 focus:outline-none">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
         <div>
             <!-- โลโก้ & ชื่อระบบ -->
-            <div class="p-6 bg-brand-50 border-b border-brand-100 flex items-center space-x-3">
-                <div class="w-12 h-12 bg-brand-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md">
+            <div class="p-6 bg-emerald-100/60 border-b border-emerald-200 flex items-center space-x-3 overflow-hidden">
+                <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-sm shrink-0">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
-                <div>
-                    <h1 class="font-bold text-brand-800 leading-tight">ระบบเบิก-คืน สารบบ</h1>
-                    <p class="text-xs text-brand-600 font-medium">ส.ป.ก.ชลบุรี 🌱</p>
+                <div class="sidebar-text whitespace-nowrap">
+                    <h1 class="font-bold text-emerald-900 leading-tight">ระบบเบิก-คืน สารบบ</h1>
+                    <p class="text-xs text-emerald-600 font-medium">ส.ป.ก.ชลบุรี 🌱</p>
                 </div>
             </div>
 
             <!-- เมนูหลัก -->
             <nav class="p-4 space-y-2">
-                <button onclick="switchTab('section1')" id="btn-section1" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition duration-200 text-brand-700 bg-brand-100 font-medium">
-                    <i class="fa-solid fa-layer-group text-lg"></i>
-                    <span>หน้ารวมแต่ละกลุ่มงาน</span>
+                <button onclick="switchTab('section1')" id="btn-section1" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition duration-200 text-emerald-800 bg-emerald-200/70 font-medium">
+                    <i class="fa-solid fa-layer-group text-lg shrink-0"></i>
+                    <span class="sidebar-text text-sm">หน้ารวมแต่ละกลุ่มงาน</span>
                 </button>
-                <button onclick="switchTab('section2')" id="btn-section2" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition duration-200 text-gray-500 hover:bg-brand-50 hover:text-brand-600">
-                    <i class="fa-solid fa-file-pen text-lg"></i>
-                    <span>แบบฟอร์มขอเบิก</span>
+                <button onclick="switchTab('section2')" id="btn-section2" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition duration-200 text-emerald-700 hover:bg-emerald-100 font-medium">
+                    <i class="fa-solid fa-file-pen text-lg shrink-0"></i>
+                    <span class="sidebar-text text-sm">แบบฟอร์มขอเบิก</span>
                 </button>
-                <button onclick="switchTab('section3')" id="btn-section3" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition duration-200 text-gray-500 hover:bg-brand-50 hover:text-brand-600">
-                    <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-                    <span>กำลังดำเนินการ</span>
+                <button onclick="switchTab('section3')" id="btn-section3" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition duration-200 text-emerald-700 hover:bg-emerald-100 font-medium">
+                    <i class="fa-solid fa-clock-rotate-left text-lg shrink-0"></i>
+                    <span class="sidebar-text text-sm">กำลังดำเนินการ</span>
                 </button>
-                <button onclick="switchTab('section4')" id="btn-section4" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition duration-200 text-gray-500 hover:bg-brand-50 hover:text-brand-600">
-                    <i class="fa-solid fa-folder-open text-lg"></i>
-                    <span>ประวัติสารบบ</span>
+                <button onclick="switchTab('section4')" id="btn-section4" class="menu-btn w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition duration-200 text-emerald-700 hover:bg-emerald-100 font-medium">
+                    <i class="fa-solid fa-folder-open text-lg shrink-0"></i>
+                    <span class="sidebar-text text-sm">ประวัติสารบบ</span>
                 </button>
             </nav>
         </div>
 
         <!-- Footer แสดงผู้ใช้งาน -->
-        <div class="p-4 border-t border-gray-100 bg-gray-50">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-full bg-brand-200 text-brand-800 flex items-center justify-center font-bold text-sm">
+        <div class="p-4 border-t border-emerald-200 bg-emerald-100/40">
+            <div class="flex items-center space-x-3 overflow-hidden">
+                <div class="w-9 h-9 rounded-2xl bg-emerald-200 text-emerald-800 flex items-center justify-center font-bold text-sm shrink-0">
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
-                <div>
-                    <p class="text-xs font-semibold text-gray-700">ผู้ดูแลระบบ</p>
-                    <p class="text-[10px] text-green-600">● เชื่อมต่อ Webhook แล้ว</p>
+                <div class="sidebar-text whitespace-nowrap">
+                    <p class="text-xs font-semibold text-emerald-900">ผู้ดูแลระบบ</p>
+                    <p class="text-[10px] text-emerald-600 font-medium">● เชื่อมต่อ Webhook แล้ว</p>
                 </div>
             </div>
         </div>
@@ -100,7 +106,6 @@
                 <h2 class="text-2xl font-bold text-gray-800">หน้ารวมแต่ละกลุ่มงาน</h2>
             </header>
 
-            <!-- การ์ดกลุ่มงาน 3 กลุ่ม (เอาตัวเลขออกแล้ว) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- ช่างและแผนที่ -->
                 <div onclick="openBorrowForm('กลุ่มงานช่างและแผนที่')" class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:border-brand-500 hover:shadow-md transition cursor-pointer text-center flex flex-col items-center justify-center min-h-[200px]">
@@ -130,7 +135,7 @@
                 </div>
             </div>
 
-            <!-- แผนภูมิแสดงอัตราการเบิกและการคืนซอง (เอาตัวเลขออกแล้ว) -->
+            <!-- แผนภูมิแสดงอัตราการเบิกและการคืนซอง -->
             <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm mt-8 space-y-6">
                 <h3 class="text-lg font-bold text-gray-800">แผนภูมิแสดงอัตราการเบิกและการคืนซองของแต่ละกลุ่มงาน</h3>
                 
@@ -248,6 +253,12 @@
                         </label>
                         <input type="text" id="otherDetail" placeholder="ระบุรายละเอียดเอกสารอื่นๆ..." class="hidden mt-2 w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                     </div>
+
+                    <!-- ช่องหมายเหตุที่เพิ่มเข้ามาใหม่ -->
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">หมายเหตุ (ถ้ามี)</label>
+                        <textarea id="remark" rows="2" placeholder="ระบุรายละเอียดเพิ่มเติม หรือเหตุผลการเบิก..." class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm"></textarea>
+                    </div>
                 </div>
 
                 <div class="pt-4">
@@ -294,12 +305,13 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-brand-50 border-b border-brand-100 text-xs font-semibold text-brand-800 uppercase">
+                            <tr class="bg-emerald-100/60 border-b border-emerald-200 text-xs font-semibold text-emerald-900 uppercase">
                                 <th class="p-4">วันที่เบิก</th>
                                 <th class="p-4">กลุ่มงาน</th>
                                 <th class="p-4">ผู้เบิก</th>
                                 <th class="p-4">แปลง / ระวาง / อำเภอ</th>
                                 <th class="p-4">รายการที่เบิก</th>
+                                <th class="p-4">หมายเหตุ</th>
                                 <th class="p-4 text-center">สถานะ</th>
                             </tr>
                         </thead>
@@ -322,7 +334,6 @@
             <h3 class="text-xl font-bold text-gray-800">ยืนยันการคืนสารบบ</h3>
             <p class="text-sm text-gray-500">คุณต้องการยืนยันการคืนสารบบรายการนี้เข้าสู่ระบบใช่หรือไม่?</p>
             
-            <!-- ปรับเปลี่ยนการแสดงผลแยกบรรทัดตรงนี้ -->
             <div id="modalItemDetails" class="bg-gray-50 p-3 rounded-xl text-left text-xs text-gray-600 space-y-1"></div>
             
             <div class="flex space-x-3 pt-2">
@@ -336,9 +347,11 @@
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1547244190562521111/Pbg82IFtqd5DlWvTEYNM9aRRgUDC8ikNdYGCZYq-aqF25HlqDtkoFeRJoxyORHLPvGcY";
 
-        let records = [];
+        // โหลดข้อมูลจาก LocalStorage ถ้าไม่มีให้ใช้陣列ว่าง
+        let records = JSON.parse(localStorage.getItem('saraban_records')) || [];
         let currentActiveGroupFilter = 'กลุ่มงานช่างและแผนที่';
         let pendingReturnId = null;
+        let isSidebarCollapsed = false;
 
         window.onload = () => {
             document.getElementById('borrowDate').valueAsDate = new Date();
@@ -347,18 +360,46 @@
             renderHistoryTable();
         };
 
+        // บันทึกข้อมูลลง LocalStorage
+        function saveRecords() {
+            localStorage.setItem('saraban_records', JSON.stringify(records));
+        }
+
+        // ระบบเปิด-ปิด Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const sidebarTexts = document.querySelectorAll('.sidebar-text');
+
+            isSidebarCollapsed = !isSidebarCollapsed;
+
+            if (isSidebarCollapsed) {
+                sidebar.classList.remove('w-72');
+                sidebar.classList.add('w-20');
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+                sidebarTexts.forEach(el => el.classList.add('hidden'));
+            } else {
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-72');
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+                sidebarTexts.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
 
             document.querySelectorAll('.menu-btn').forEach(btn => {
-                btn.classList.remove('bg-brand-100', 'text-brand-700', 'font-medium');
-                btn.classList.add('text-gray-500');
+                btn.classList.remove('bg-emerald-200/70', 'text-emerald-800');
+                btn.classList.add('text-emerald-700');
             });
 
             const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.add('bg-brand-100', 'text-brand-700', 'font-medium');
-            activeBtn.classList.remove('text-gray-500');
+            activeBtn.classList.add('bg-emerald-200/70', 'text-emerald-800');
+            activeBtn.classList.remove('text-emerald-700');
         }
 
         function openBorrowForm(groupName) {
@@ -411,6 +452,7 @@
             }
 
             const sarabanNo = document.getElementById('sarabanNumber').value;
+            const remarkVal = document.getElementById('remark').value;
 
             const newRecord = {
                 id: Date.now(),
@@ -422,10 +464,12 @@
                 district: document.getElementById('district').value,
                 items: selectedItems,
                 sarabanNo: sarabanNo,
+                remark: remarkVal,
                 status: 'กำลังดำเนินการ'
             };
 
             records.push(newRecord);
+            saveRecords(); // บันทึกข้อมูลคงทน
 
             sendNotification('borrow', newRecord);
 
@@ -486,6 +530,7 @@
                             <p><strong>อำเภอ:</strong> ${item.district}</p>
                             ${item.sarabanNo ? `<p class="text-amber-700 font-medium"><strong>เลขสารบัญ:</strong> ${item.sarabanNo}</p>` : ''}
                             <p><strong>รายการ:</strong> ${item.items.join(', ')}</p>
+                            ${item.remark ? `<p class="text-gray-600 italic"><strong>หมายเหตุ:</strong> ${item.remark}</p>` : ''}
                         </div>
                     </div>
                     <button onclick="openReturnModal(${item.id})" class="w-full py-2 bg-brand-50 text-brand-700 font-medium rounded-xl hover:bg-brand-600 hover:text-white transition text-xs flex items-center justify-center space-x-1">
@@ -497,7 +542,6 @@
             });
         }
 
-        // ป๊อบอัพปรับแก้การแสดงผลแยกบรรทัด
         function openReturnModal(id) {
             pendingReturnId = id;
             const item = records.find(r => r.id === id);
@@ -520,6 +564,8 @@
                 const item = records.find(r => r.id === pendingReturnId);
                 item.status = 'คืนสารบบแล้ว';
 
+                saveRecords(); // บันทึกสถานะใหม่ลง LocalStorage
+
                 sendNotification('return', item);
 
                 closeReturnModal();
@@ -535,7 +581,7 @@
             tbody.innerHTML = '';
 
             if(records.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-gray-400">ยังไม่มีประวัติการเบิก-คืน</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-gray-400">ยังไม่มีประวัติการเบิก-คืน</td></tr>`;
                 return;
             }
 
@@ -556,6 +602,7 @@
                         ${item.items.join(', ')}
                         ${item.sarabanNo ? `<br><span class="text-amber-600">(สารบัญ: ${item.sarabanNo})</span>` : ''}
                     </td>
+                    <td class="p-4 text-gray-500 text-xs">${item.remark || '-'}</td>
                     <td class="p-4 text-center">${statusBadge}</td>
                 `;
                 tbody.appendChild(tr);
@@ -604,7 +651,8 @@
                             { name: "กลุ่ม/ระวางที่", value: data.landGroup, inline: true },
                             { name: "อำเภอ", value: data.district, inline: true },
                             { name: "รายการเอกสาร", value: data.items.join(', '), inline: false },
-                            ...(data.sarabanNo ? [{ name: "เลขสารบัญ", value: data.sarabanNo, inline: true }] : [])
+                            ...(data.sarabanNo ? [{ name: "เลขสารบัญ", value: data.sarabanNo, inline: true }] : []),
+                            ...(data.remark ? [{ name: "หมายเหตุ", value: data.remark, inline: false }] : [])
                         ],
                         footer: { text: "ระบบแจ้งเตือนสารบบ ส.ป.ก.ชลบุรี" },
                         timestamp: new Date()
